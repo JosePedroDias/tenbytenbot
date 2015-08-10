@@ -16,9 +16,11 @@
 
 
 (defn mcreate
-  [dims]
   "creates a matrix of m by n dims, with false values"
-  {:dims dims :values (-create (reduce * dims))})
+  ([dims]
+    {:dims dims :values (-create (reduce * dims))})
+  ([dims positions]
+    (msets (mcreate dims) positions true)))
 
 
 (defn mget [matrix pos]
@@ -60,6 +62,8 @@
 ;(msets (mcreate [3 2]) '() true)
 ;(msets (mcreate [3 2]) '([0 0]) true)
 ;(msets (mcreate [3 2]) '([0 0] [0 1]) true)
+
+;(mcreate [3 2] '([0 0] [1 0]))
 
 ;(mget (mcreate [3 2]) [0 0])
 ;(mget (mset (mcreate [3 2]) [0 0] true) [0 0])
