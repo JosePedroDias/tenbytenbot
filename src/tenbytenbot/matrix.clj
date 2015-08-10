@@ -33,8 +33,11 @@
 
 (defn mprint [matrix]
   (let [values (get matrix :values) dims (get matrix :dims)]
-    (doseq [x (range (get dims 0)) y (range (get dims 1))]
-      (print (str x "," y "\n")))))
+    (doseq [y (range (get dims 1)) x (range (get dims 0))]
+      (let [v (mget matrix [x y])]
+        (print (if v "1" "0"))
+        (when (= x (- (get dims 0) 1))
+          (print "\n"))))))
 
 
-(mprint (mcreate [2 3] []))
+(mprint (mcreate [3 2] (list [0 0] [2 1])))
