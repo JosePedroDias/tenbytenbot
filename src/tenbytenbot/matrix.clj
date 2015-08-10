@@ -57,16 +57,12 @@
 
 ;(mset (mcreate [3 2]) [0 0] true)
 
-(msets (mcreate [3 2]) '() true)
-(msets (mcreate [3 2]) '([0 0]) true)
-(msets (mcreate [3 2]) '([0 0] [0 1]) true)
+;(msets (mcreate [3 2]) '() true)
+;(msets (mcreate [3 2]) '([0 0]) true)
+;(msets (mcreate [3 2]) '([0 0] [0 1]) true)
 
-;(msets (mcreate [3 2]) '([0 0] [1 1]) true)
+;(mget (mcreate [3 2]) [0 0])
+;(mget (mset (mcreate [3 2]) [0 0] true) [0 0])
 
 ;(mprint (mcreate [3 2]))
-
-;(mset (mcreate [3 2]) [0 0] true)
-
-;(mprint (mcreate [3 2] (list [0 0])))
-
-;(mset(mcreate [3 2])
+;(mprint (msets (mcreate [3 2]) '([0 0] [0 1]) true))
