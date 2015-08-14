@@ -45,13 +45,36 @@
     (get values (linearize dims pos))))
 
 
+(defn in-bounds [matrix pos]
+  "returns true iif position inside matrix's bounds"
+  (let [
+    [w h] (get matrix :dims)
+    [x y] pos]
+    (and
+      (>= x 0)
+      (>= y 0)
+      (< x w)
+      (< y h))))
+
+
+;; (defn collides-with [m1 m2 pos]
+;;   "returns true if m2 positioned at pos collides with m1"
+;;   (let [
+;;     [px py] pos
+;;     [w h] (get m2 :dims)]
+;;     (doseq [y (range h) x (range w)]
+;;       (if (and (mget m2 [x y])
+;;                (or (not (in-bounds m1 [(+ px x) (+ py y)]))
+;;                    (mget m1 [(+ px x) (+ py y)])))))))
+
+
 (defn mprint [matrix]
   "prints matrix"
-  (let [values (get matrix :values) dims (get matrix :dims)]
-    (doseq [y (range (get dims 1)) x (range (get dims 0))]
+  (let [values (get matrix :values) [w h] (get matrix :dims)]
+    (doseq [y (range h) x (range w)]
       (let [v (mget matrix [x y])]
         (print (if v "1" "0"))
-        (when (= x (- (get dims 0) 1))
+        (when (= x (- w 1))
           (print "\n"))))))
 
 
