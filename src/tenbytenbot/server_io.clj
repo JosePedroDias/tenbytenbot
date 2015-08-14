@@ -1,6 +1,5 @@
-(ns tenbytenbot.server-io)
-
-(require '[clj-http.client :as client])
+(ns tenbytenbot.server-io
+  (:require [clj-http.client :as client]))
 
 
 

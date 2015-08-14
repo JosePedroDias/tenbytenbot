@@ -1,7 +1,6 @@
 (ns tenbytenbot.core
-  (:gen-class))
-
-(require 'tenbytenbot.server-io)
+  (:gen-class)
+  (:require [tenbytenbot.server-io :as io]))
 
 
 
@@ -9,4 +8,4 @@
   "main fn"
   [& args]
   (println "starting")
-  (println (tenbytenbot.server-io/new-game)))
+  (println (io/new-game)))
