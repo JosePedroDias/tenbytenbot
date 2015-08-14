@@ -1,6 +1,6 @@
 (ns tenbytenbot.pieces)
 
-(load "matrix")
+(require 'tenbytenbot.matrix)
 (refer 'tenbytenbot.matrix)
 
 

@@ -7,7 +7,7 @@
 (def GAME_HOST "http://stage.sl.pt:3000")
 
 
-(defn io [endpoint]
+(defn- io [endpoint]
   "auxiliary function to perform actions on the server"
   (get
     (client/get

@@ -1,9 +1,9 @@
 (ns tenbytenbot.matrix-test)
 
-(require '[clojure.test])
+(require 'clojure.test)
 (refer 'clojure.test)
 
-(load "matrix")
+(require 'tenbytenbot.matrix)
 (refer 'tenbytenbot.matrix)
 
 

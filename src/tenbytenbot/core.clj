@@ -1,7 +1,7 @@
 (ns tenbytenbot.core
   (:gen-class))
 
-(load "server-io")
+(require 'tenbytenbot.server-io)
 
 
 

@@ -1,14 +1,14 @@
 (ns tenbytenbot.matrix)
 
 
-(defn -create [n]
+(defn- create [n]
   "auxiliary"
   (into
      (vector-of :boolean)
      (repeat n false)))
 
 
-(defn -linearize [dims pos]
+(defn- linearize [dims pos]
   (+ (get pos 0) (* (get pos 1) (get dims 0))))
 
 
@@ -21,7 +21,7 @@
     (assoc
       matrix
       :values
-      (assoc values (-linearize dims pos) val))))
+      (assoc values (linearize dims pos) val))))
 
 
 (defn msets [matrix positions val]
@@ -34,7 +34,7 @@
 (defn mcreate
   "creates a matrix of m by n dims, with false values"
   ([dims]
-    {:dims dims :values (-create (reduce * dims))})
+    {:dims dims :values (create (reduce * dims))})
   ([dims positions]
     (msets (mcreate dims) positions true)))
 
@@ -42,7 +42,7 @@
 (defn mget [matrix pos]
   "gets element at position pos"
   (let [values (get matrix :values) dims (get matrix :dims)]
-    (get values (-linearize dims pos))))
+    (get values (linearize dims pos))))
 
 
 (defn mprint [matrix]
