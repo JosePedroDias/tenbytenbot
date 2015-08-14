@@ -1,8 +1,7 @@
-(ns tenbytenbot.server-io
-  (:require
-    [clj-http.client   :as client]
-    ;[clojure.data.json :as json]
-   ))
+(ns tenbytenbot.server-io)
+
+(require '[clj-http.client :as client])
+
 
 
 (def GAME_HOST "http://stage.sl.pt:3000")

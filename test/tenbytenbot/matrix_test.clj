@@ -1,8 +1,15 @@
-(ns tenbytenbot.matrix-test
-  (:require
-    [clojure.test       :refer :all]
-    [tenbytenbot.matrix :refer :all]))
+(ns tenbytenbot.matrix-test)
 
-(deftest mcreate
+(require '[clojure.test])
+(refer 'clojure.test)
+
+(load "matrix")
+(refer 'tenbytenbot.matrix)
+
+
+
+(deftest mcreate-test
   (testing "simple creation"
-    (is (= (mcreate [3 2] {:dims [3 2] :values [false false false false false false]})))))
+    (is (=
+         (mcreate [3 2])
+         {:dims [3 2] :values [false false false false false false]}))))

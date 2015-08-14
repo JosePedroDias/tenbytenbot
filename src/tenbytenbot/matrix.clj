@@ -15,20 +15,6 @@
 ;;-------------------
 
 
-(defn mcreate
-  "creates a matrix of m by n dims, with false values"
-  ([dims]
-    {:dims dims :values (-create (reduce * dims))})
-  ([dims positions]
-    (msets (mcreate dims) positions true)))
-
-
-(defn mget [matrix pos]
-  "gets element at position pos"
-  (let [values (get matrix :values) dims (get matrix :dims)]
-    (get values (-linearize dims pos))))
-
-
 (defn mset [matrix pos val]
   "sets element at position pos with value val"
   (let [values (get matrix :values) dims (get matrix :dims)]
@@ -43,6 +29,20 @@
   (if (empty? positions)
     matrix
     (msets (mset matrix (first positions) val) (next positions) val)))
+
+
+(defn mcreate
+  "creates a matrix of m by n dims, with false values"
+  ([dims]
+    {:dims dims :values (-create (reduce * dims))})
+  ([dims positions]
+    (msets (mcreate dims) positions true)))
+
+
+(defn mget [matrix pos]
+  "gets element at position pos"
+  (let [values (get matrix :values) dims (get matrix :dims)]
+    (get values (-linearize dims pos))))
 
 
 (defn mprint [matrix]
