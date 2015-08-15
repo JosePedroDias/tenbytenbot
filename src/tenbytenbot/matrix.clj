@@ -57,15 +57,42 @@
       (< y h))))
 
 
-;; (defn collides-with [m1 m2 pos]
-;;   "returns true if m2 positioned at pos collides with m1"
-;;   (let [
-;;     [px py] pos
-;;     [w h] (get m2 :dims)]
-;;     (doseq [y (range h) x (range w)]
-;;       (if (and (mget m2 [x y])
-;;                (or (not (in-bounds m1 [(+ px x) (+ py y)]))
-;;                    (mget m1 [(+ px x) (+ py y)])))))))
+(defn filled-positions [m]
+  "returns sequence of filled positions in a given matrix"
+  (let [[w h] (get m :dims)]
+    (for [
+      y (range h)
+      x (range w)
+      :when (mget m [x y])]
+        [x y])))
+
+
+(defn filled-positions-shifted [m pos]
+  "filled position shifted by given pos"
+  (let [[px py] pos]
+    (map (fn [p] [(+ (get p 0) px) (+ (get p 1) py)]) (filled-positions m))))
+
+
+(defn collides-with [m1 m2 pos]
+  "returns true if m2 positioned at pos collides with m1"
+  (loop [positions (filled-positions-shifted m2 pos)]
+    (if (empty? positions)
+      false
+      (let [pos2 (first positions)]
+        (if (or (not (in-bounds m1 pos2))
+                (mget m1 pos2))
+          true
+          (recur (next positions)))))))
+
+
+(defn glue [m1 m2 pos]
+  "returns result of applying m2 positioned at pos onto m1
+  assumes no collision ocurrs"
+  (loop [m1 m1
+         positions (filled-positions-shifted m2 pos)]
+    (if (empty? positions)
+      m1
+      (recur (mset m1 (first positions) true) (next positions)))))
 
 
 (defn mprint [matrix]
@@ -76,20 +103,3 @@
         (print (if v "1" "0"))
         (when (= x (- w 1))
           (print "\n"))))))
-
-
-;(mcreate [3 2])
-
-;(mset (mcreate [3 2]) [0 0] true)
-
-;(msets (mcreate [3 2]) '() true)
-;(msets (mcreate [3 2]) '([0 0]) true)
-;(msets (mcreate [3 2]) '([0 0] [0 1]) true)
-
-;(mcreate [3 2] '([0 0] [1 0]))
-
-;(mget (mcreate [3 2]) [0 0])
-;(mget (mset (mcreate [3 2]) [0 0] true) [0 0])
-
-;(mprint (mcreate [3 2]))
-;(mprint (msets (mcreate [3 2]) '([0 0] [0 1]) true))
