@@ -100,6 +100,6 @@
   (let [values (get matrix :values) [w h] (get matrix :dims)]
     (doseq [y (range h) x (range w)]
       (let [v (mget matrix [x y])]
-        (print (if v "1" "0"))
+        (print (if v "#" "."))
         (when (= x (- w 1))
           (print "\n"))))))

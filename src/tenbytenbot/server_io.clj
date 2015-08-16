@@ -1,5 +1,7 @@
 (ns tenbytenbot.server-io
-  (:require [clj-http.client :as client]))
+  (:require
+    [clj-http.client   :as client]
+    [clojure.data.json :as json]))
 
 
 
@@ -8,11 +10,12 @@
 
 (defn- io [endpoint]
   "auxiliary function to perform actions on the server"
-  (get
-    (client/get
-       (str GAME_HOST endpoint)
-       {:accept :json})
-    :body))
+  (json/read-str
+    (get
+      (client/get
+         (str GAME_HOST endpoint)
+         {:accept :json})
+      :body) :key-fn keyword))
 
 
 (defn new-game []
