@@ -6,22 +6,13 @@
 
 
 
-(defn play [board slot-nums debug]
+(defn play [board slot-nums step]
   "elects a move to perform"
   (let [slots (vec (map (fn [num] (get p/pieces num)) slot-nums))]
 
-    (when debug
-      (println "----")
-      (doseq [[i slot] (map-indexed vector slots)]
-        (println (str "\n" i ":"))
-        (m/mprint slot)))
-
-    (let [pos [0 0]
-          slot-index 0
+    (let [pos [(* step 3) 0]
+          slot-index step
           slot (get slots slot-index)]
-
-      (when debug
-        (println (str "\nabout to play " slot-index " on " pos "...")))
 
       { :slot slot
         :slot-index slot-index
@@ -31,23 +22,42 @@
 
 (defn go []
   "play a tenbyten game"
-  (let [debug true
-        board (m/mcreate [10 10])
-        ng (io/new-game)]
+  (let [verbose true
+        debug true]
 
-    (when debug
-      (println ng))
+    (loop [board (m/mcreate [10 10])
+           state (io/new-game)]
 
-    (let [p (play board (:slots ng) debug)
-          [x y] (:pos p)]
+      (when debug
+        (println "server state:")
+        (println state))
 
-      (let [r (io/play (:id ng) (:step ng) (:slot-index p) x y)
-            board2 (m/glue board (:slot p) (:pos p))]
-        (when debug
-          (println r)
-          (println)
-          (m/mprint (:slot p))
-          (println)
-          (m/mprint board2))
+      (when verbose
+        (println)
+        (m/mprint board)
+        (println))
 
-        ))))
+      (let [move (play board (:slots state) (:step state))
+            [x y] (:pos move)]
+
+        (when verbose
+          (println (str "About to play slot #" (:slot-index move) " on pos " x ", " y ))
+
+          (when (:slot move)
+            (println)
+            (m/mprint (:slot move))
+            (println)))
+
+        (let [new-board (try
+                          (m/glue board (:slot move) (:pos move))
+                          (catch Exception ex
+                            ;(println ex)
+                            (println "invalid move!")
+                            nil))]
+
+          (if (nil? new-board)
+            nil
+            (let [new-state (io/play (:id state) (:step state) (:slot-index move) x y)]
+              (if (:err new-state)
+                (println (:err new-state))
+                (recur new-board new-state)))))))))
