@@ -27,7 +27,7 @@ or:
 
 ## Roadmap
 
-[x] porting whole tenbyten operations
-[.] make dumbest playing bot  *ongoing*
-[ ] make bot elect moves based on 1 play heuristic
-[ ] make bot elect moves based on 3 plays heuristic
+* [x] porting whole tenbyten operations
+* [.] make dumbest playing bot  *ongoing*
+* [ ] make bot elect moves based on 1 play heuristic
+* [ ] make bot elect moves based on 3 plays heuristic
