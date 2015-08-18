@@ -2,13 +2,14 @@
 
 
 (defn- create [n]
-  "auxiliary"
+  "aux: creates vector of booleans of given size"
   (into
      (vector-of :boolean)
      (repeat n false)))
 
 
 (defn- linearize [dims pos]
+  "aux: 2D coords to linear vector"
   (+ (get pos 0) (* (get pos 1) (get dims 0))))
 
 
@@ -73,7 +74,7 @@
     (map (fn [p] [(+ (get p 0) px) (+ (get p 1) py)]) (filled-positions m))))
 
 
-(defn collides-with [m1 m2 pos]
+(defn collides-with? [m1 m2 pos]
   "returns true if m2 positioned at pos collides with m1"
   (loop [positions (filled-positions-shifted m2 pos)]
     (if (empty? positions)
@@ -95,6 +96,21 @@
       (recur (mset m1 (first positions) true) (next positions)))))
 
 
+(defn is-column-filled? [matrix x]
+  "true iif matrix has its cells on column x filled"
+  false) ;; TODO
+
+
+(defn is-row-filled? [matrix y]
+  "true iif matrix has its cells on row y filled"
+  false) ;; TODO
+
+
+(defn wipe-filled-rows-and-columns [board]
+  "returns a new board with filled rows and columns removed"
+  board) ;; TODO
+
+
 (defn mprint [matrix]
   "prints matrix"
   (let [values (get matrix :values) [w h] (get matrix :dims)]
@@ -103,3 +119,4 @@
         (print (if v "#" "."))
         (when (= x (- w 1))
           (print "\n"))))))
+

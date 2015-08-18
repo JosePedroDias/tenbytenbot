@@ -11,7 +11,7 @@
   (let [[bw bh] (:dims board)
         [pw ph] (:dims piece)]
     (filter
-      (fn [pos] (not (m/collides-with board piece pos)))
+      (fn [pos] (not (m/collides-with? board piece pos)))
       (for [x (range (inc (- bw pw)))
             y (range (inc (- bh ph)))]
         [x y]))))
@@ -35,7 +35,8 @@
 ;(compute-valid-moves (m/mcreate [5 5]) [3 nil 6])
 
 
-(defn play [board slot-nums step]
+(defn play [board slot-nums]
+  "given a board and an array of pieces (indices)"
   (let [valid-moves (compute-valid-moves board slot-nums)]
     (rand-nth valid-moves)))
 
@@ -60,7 +61,7 @@
 
       (if (:ended state)
         (println "GAME OVER")
-        (let [move (play board (:slots state) (:step state))
+        (let [move (play board (:slots state))
               piece (get p/pieces (get (:slots state) (:slot-index move)))
               [x y] (:pos move)]
 
@@ -73,7 +74,8 @@
               (println)))
 
           (let [new-board (try
-                            (m/glue board piece (:pos move))
+                            (m/wipe-filled-rows-and-columns
+                              (m/glue board piece (:pos move)))
                             ;; TODO: remove lines!
                             (catch Exception ex
                               ;(println ex)
