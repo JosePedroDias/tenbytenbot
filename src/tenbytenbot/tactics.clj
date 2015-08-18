@@ -58,28 +58,31 @@
         (m/mprint board)
         (println))
 
-      (let [move (play board (:slots state) (:step state))
-            piece (get p/pieces (get (:slots state) (:slot-index move)))
-            [x y] (:pos move)]
+      (if (:ended state)
+        (println "GAME OVER")
+        (let [move (play board (:slots state) (:step state))
+              piece (get p/pieces (get (:slots state) (:slot-index move)))
+              [x y] (:pos move)]
 
-        (when verbose
-          (println (str "About to play slot #" (:slot-index move) " on pos " x ", " y ))
+          (when verbose
+            (println (str "About to play slot #" (:slot-index move) " on pos " x ", " y ))
 
-          (when piece
-            (println)
-            (m/mprint piece)
-            (println)))
+            (when piece
+              (println)
+              (m/mprint piece)
+              (println)))
 
-        (let [new-board (try
-                          (m/glue board piece (:pos move))
-                          (catch Exception ex
-                            ;(println ex)
-                            (println "invalid move!")
-                            nil))]
+          (let [new-board (try
+                            (m/glue board piece (:pos move))
+                            ;; TODO: remove lines!
+                            (catch Exception ex
+                              ;(println ex)
+                              (println "invalid move!")
+                              nil))]
 
-          (if (nil? new-board)
-            nil
-            (let [new-state (io/play (:id state) (:step state) (:slot-index move) x y)]
-              (if (:err new-state)
-                (println (:err new-state))
-                (recur new-board new-state)))))))))
+            (if (nil? new-board)
+              nil
+              (let [new-state (io/play (:id state) (:step state) (:slot-index move) x y)]
+                (if (:err new-state)
+                  (println (:err new-state))
+                  (recur new-board new-state))))))))))

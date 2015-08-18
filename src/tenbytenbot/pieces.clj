@@ -45,6 +45,7 @@
   ])
 
 
+;(get pieces 13)
 
 ;; (def -odds
 ;;   [

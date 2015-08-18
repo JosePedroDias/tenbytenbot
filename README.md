@@ -28,6 +28,7 @@ or:
 ## Roadmap
 
 * [x] porting whole tenbyten operations
-* [.] make dumbest playing bot  *ongoing*
-* [ ] make bot elect moves based on 1 play heuristic
+* [x] make dumbest playing bot (random from valid moves)
+* [ ] **compute board after lines have been removed**
+* [ ] make bot elect moves based on 1 play heuristic (> number of empty cells; < number of islands)
 * [ ] make bot elect moves based on 3 plays heuristic
