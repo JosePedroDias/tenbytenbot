@@ -96,19 +96,75 @@
       (recur (mset m1 (first positions) true) (next positions)))))
 
 
+(defn- column-positions [matrix x]
+  "returns positions that make up the given column"
+  (map
+    (fn [y] [x y])
+    (range (get (:dims matrix) 1))))
+
+
+(defn- row-positions [matrix y]
+  "returns positions that make up the given row"
+  (map
+    (fn [x] [x y])
+    (range (get (:dims matrix) 0))))
+
+
 (defn is-column-filled? [matrix x]
   "true iif matrix has its cells on column x filled"
-  false) ;; TODO
+  (every?
+    (fn [pos] (mget matrix pos))
+    (column-positions matrix x)))
 
 
 (defn is-row-filled? [matrix y]
   "true iif matrix has its cells on row y filled"
-  false) ;; TODO
+  (every?
+    (fn [pos] (mget matrix pos))
+    (row-positions matrix y)))
 
 
-(defn wipe-filled-rows-and-columns [board]
-  "returns a new board with filled rows and columns removed"
-  board) ;; TODO
+(defn set-column [matrix x val]
+  "set given column to given val"
+  (msets matrix (column-positions matrix x) val))
+
+
+(defn set-row [matrix y val]
+  "set given row to given val"
+  (msets matrix (row-positions matrix y) val))
+
+
+(defn list-filled-rows-and-columns [matrix]
+  "returns hash with indices for filled rows and columns"
+  (let [[w h] (:dims matrix)]
+    {:rows (filter (fn [y] (is-row-filled? matrix y)) (range h))
+     :cols (filter (fn [x] (is-column-filled? matrix x)) (range w))}))
+
+
+(defn count-filled-rows-or-columns
+  "returns number of filled rows and columns in given matrix
+  supports 2nd argument with precomputed hash"
+  ([matrix] (count-filled-rows-or-columns matrix (list-filled-rows-and-columns matrix)))
+  ([matrix status]
+    (let [{rows :rows cols :cols} status]
+      (+ (count rows) (count cols)))))
+
+
+(defn wipe-filled-rows-and-columns
+  "returns a new board with filled rows and columns removed
+  supports 2nd argument with precomputed hash"
+  ([matrix] (wipe-filled-rows-and-columns matrix (list-filled-rows-and-columns matrix)))
+  ([matrix status]
+    (let [{rows :rows cols :cols} status]
+      (loop [m0 (loop [m matrix
+                      cols cols]
+                 (if (empty? cols)
+                   m
+                   (recur (set-column m (first cols) false) (next cols))))
+             rows rows]
+        (if (empty? rows)
+          m0
+          (recur (set-row m0 (first rows) false) (next rows)))))))
 
 
 (defn mprint [matrix]

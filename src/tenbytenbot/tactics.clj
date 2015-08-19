@@ -73,14 +73,14 @@
               (m/mprint piece)
               (println)))
 
-          (let [new-board (try
-                            (m/wipe-filled-rows-and-columns
-                              (m/glue board piece (:pos move)))
-                            ;; TODO: remove lines!
-                            (catch Exception ex
-                              ;(println ex)
-                              (println "invalid move!")
-                              nil))]
+          (let [new-board (let [temp-board (m/glue board piece (:pos move))
+                                status (m/list-filled-rows-and-columns temp-board)
+                                rs-and-cs (m/count-filled-rows-or-columns temp-board status)]
+                            (if (= rs-and-cs 0)
+                              temp-board
+                              (do
+                                (println (str "DESTROYED " rs-and-cs " ROWS AND COLS!"))
+                                (m/wipe-filled-rows-and-columns temp-board status))))]
 
             (if (nil? new-board)
               nil
