@@ -1,6 +1,7 @@
 (ns tenbytenbot.server-io
   (:require
-    [clj-http.client   :as client]
+    #?(:clj  [clj-http.client   :as client]
+       :cljs [cljs-http.client  :as client])
     [clojure.data.json :as json]))
 
 
