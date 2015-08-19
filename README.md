@@ -7,7 +7,16 @@ I'm making this project as a way of learning Clojure.
 
 ## Usage
 
+1. via clojure
+
     $ lein run
+
+2. via clojurescript
+
+    $ python -m SimpleHTTPServer 5566 &
+    $ lein cljsbuild once
+
+visit <http://127.0.0.1:5566/test-cljs.html>
 
 
 
