@@ -4,7 +4,8 @@
 (defn- create [n]
   "aux: creates vector of booleans of given size"
   (into
-     (vector-of :boolean)
+     ;(vector-of :boolean)
+     (vector)
      (repeat n false)))
 
 
@@ -167,7 +168,11 @@
           (recur (set-row m0 (first rows) false) (next rows)))))))
 
 
-(defn to-string [matrix]
+; NEW
+(enable-console-print!)
+
+
+(defn ^:export to-string [matrix]
   "matrix string representation"
   (let [values (get matrix :values)
         [w h] (get matrix :dims)

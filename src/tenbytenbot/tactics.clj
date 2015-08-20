@@ -56,7 +56,7 @@
 
       (when verbose
         (println)
-        (m/mprint board)
+        (println (m/to-string board))
         (println))
 
       (if (:ended state)
@@ -66,11 +66,11 @@
               [x y] (:pos move)]
 
           (when verbose
-            (println (str "About to play slot #" (:slot-index move) " on pos " x ", " y ))
+            (println "About to play slot #" (:slot-index move) "on pos" x "," y )
 
             (when piece
               (println)
-              (m/mprint piece)
+              (println (m/to-string board))
               (println)))
 
           (let [new-board (let [temp-board (m/glue board piece (:pos move))
@@ -79,7 +79,7 @@
                             (if (= rs-and-cs 0)
                               temp-board
                               (do
-                                (println (str "DESTROYED " rs-and-cs " ROWS AND COLS!"))
+                                (println "DESTROYED " rs-and-cs " ROWS AND COLS!")
                                 (m/wipe-filled-rows-and-columns temp-board status))))]
 
             (if (nil? new-board)
