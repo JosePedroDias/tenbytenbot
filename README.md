@@ -16,7 +16,11 @@ I'm making this project as a way of learning Clojure.
     $ python -m SimpleHTTPServer 5566 &
     $ lein cljsbuild once
 
-visit <http://127.0.0.1:5566/test-cljs.html>
+visit <http://127.0.0.1:5566/test-cljs.html> (open the console)
+
+3. now, on your browser
+
+visit <http://rawgit.com/JosePedroDias/tenbytenbot/master/test-cljs.html> (open the console)
 
 
 
