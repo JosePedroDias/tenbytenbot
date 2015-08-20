@@ -41,7 +41,7 @@
 
 
 
-(defn go []
+(defn ^:export go []
   "play a tenbyten game"
   (let [verbose true
         debug true]

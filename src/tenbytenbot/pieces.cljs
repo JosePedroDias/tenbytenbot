@@ -3,7 +3,7 @@
 
 
 
-(def ^:export pieces
+(def pieces
   [
     ; 1: 1x1 square
     (m/mcreate [1 1] '([0 0]))
@@ -77,7 +77,7 @@
 
 
 
-(defn ^:export random-piece []
+(defn random-piece []
   "NON-DETERMINISTIC BEHAVIOR!
   returns random piece with same probability between 9 available kinds"
   (get
@@ -85,13 +85,3 @@
     (get
       -piece-mapping
       (rand-int 36))))
-
-;(get pieces 1)
-
-;(count pieces)
-
-;(doseq [p pieces]
-;  (print "\n")
-;  (m/mprint p))
-
-;(random-piece)

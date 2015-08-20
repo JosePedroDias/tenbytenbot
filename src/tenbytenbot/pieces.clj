@@ -85,13 +85,3 @@
     (get
       -piece-mapping
       (rand-int 36))))
-
-;(get pieces 1)
-
-;(count pieces)
-
-;(doseq [p pieces]
-;  (print "\n")
-;  (m/mprint p))
-
-;(random-piece)

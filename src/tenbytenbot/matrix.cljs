@@ -172,7 +172,7 @@
 (enable-console-print!)
 
 
-(defn ^:export to-string [matrix]
+(defn to-string [matrix]
   "matrix string representation"
   (let [values (get matrix :values)
         [w h] (get matrix :dims)

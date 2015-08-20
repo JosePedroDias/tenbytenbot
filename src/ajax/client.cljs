@@ -9,4 +9,4 @@
     (.-responseText xhr)))
 
 
-(js/alert (sync "http://stage.sl.pt:3000/active-sessions"))
+;(js/alert (sync "http://stage.sl.pt:3000/active-sessions"))

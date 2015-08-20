@@ -25,6 +25,7 @@ visit <http://127.0.0.1:5566/test-cljs.html>
 * [x] porting whole tenbyten operations
 * [x] make dumbest playing bot (random from valid moves)
 * [x] compute board after lines have been removed
+* [x] make bot run on the browser via `cljsbuild`
 * [ ] **make bot elect moves based on 1 play heuristic (> number of empty cells; < number of islands)**
 * [ ] make bot elect moves based on 3 plays heuristic
 * [ ] make the bot enter highscores
