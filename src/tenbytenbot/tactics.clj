@@ -44,6 +44,7 @@
 
 
 (defn number-of-islands [board]
+  "TODO http://prismoskills.appspot.com/lessons/Arrays/Count_blobs_in_matrix.jsp"
   0)
 
 
