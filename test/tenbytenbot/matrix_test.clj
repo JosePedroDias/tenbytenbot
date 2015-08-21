@@ -183,3 +183,25 @@
     (is (=
           (m/wipe-filled-rows-and-columns (m/mcreate [2 2] '([0 0] [1 0] [1 1])))
           (m/mcreate [2 2])))))
+
+
+
+(deftest from-string-test
+  (testing "1"
+    (is (= (m/from-string "##
+#.")
+           {:dims [2 2] :values [true true true false]})))
+  (testing "2"
+    (is (= (m/from-string "#####")
+           {:dims [5 1] :values [true true true true true]}))))
+
+
+
+(deftest to-string-test
+  (testing "1"
+    (is (= (m/to-string {:dims [2 2] :values [true true true false]})
+           "##
+#.")))
+  (testing "2"
+    (is (= (m/to-string {:dims [5 1] :values [true true true true true]})
+           "#####"))))

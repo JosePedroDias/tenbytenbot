@@ -33,6 +33,20 @@
         (map vector (iterate inc 0) slotnums)))))
 
 
+; HEURISTIC HELPER FUNCTIONS
+
+
+(defn empty-spots [board]
+  "returns number of cells which are empty"
+  (reduce (fn [prev this] (+ prev (if this 0 1))) 0 (:values board)))
+
+;(empty-spots (m/mcreate [3 3] '([0 0] [1 0])))
+
+
+(defn number-of-islands [board]
+  0)
+
+
 
 (defn play [board slot-nums]
   "given a board and an array of pieces (indices)"

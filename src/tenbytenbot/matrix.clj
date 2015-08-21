@@ -1,4 +1,6 @@
-(ns tenbytenbot.matrix)
+(ns tenbytenbot.matrix
+  (:require
+    [clojure.string :as s]))
 
 
 (defn- create [n]
@@ -184,3 +186,44 @@
             (conj out
                   (if v \# \.)
                   (when (and (= x sw) (not (= y sh))) \newline))))))))
+
+
+(defn- parse-line [s]
+  ""
+  (loop [filled-positions []
+         x 0
+         s s]
+    (if (= (count s) 0)
+      filled-positions
+      (let [v (first s)]
+        (if (= v \#)
+          (recur (conj filled-positions x) (inc x) (next s))
+          (recur filled-positions          (inc x) (next s)))))))
+
+;(parse-line "#..#.")
+
+
+(defn from-string [s]
+  ""
+  (let [lines (s/split-lines s)
+        w (count (first lines))
+        h (count lines)]
+    (mcreate
+      [w h]
+      (loop [filled-positions []
+             y 0
+             lines lines]
+        (if (empty? lines)
+          filled-positions
+          (recur
+            (concat
+              filled-positions
+              (map
+                (fn [x] [x y])
+                (parse-line (first lines))))
+            (inc y)
+            (next lines)))))))
+
+
+;(from-string "##.
+;#..")
