@@ -43,9 +43,27 @@
 ;(empty-spots (m/mcreate [3 3] '([0 0] [1 0])))
 
 
-(defn number-of-islands [board]
-  "TODO http://prismoskills.appspot.com/lessons/Arrays/Count_blobs_in_matrix.jsp"
-  0)
+
+(defn- neighbours-4 [pos relevant-positions]
+  (let [[x y] pos
+        potentials set([[(dec x) y]
+                        [(inc x) y]
+                        [x (dec y)]
+                        [x (inc y)]])]
+    (intersection potentials relevant-positions)))
+
+
+
+;; (defn number-of-islands [board]
+;;   "TODO http://prismoskills.appspot.com/lessons/Arrays/Count_blobs_in_matrix.jsp"
+;;   (loop [left-to-visit (set (m/filled-positions board))
+;;          result 0]
+
+
+
+;;       (if (and (m/mget board [x y])
+;;                (not (m/get [
+;;   0)
 
 
 
