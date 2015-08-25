@@ -44,20 +44,43 @@
 
 
 
-(defn- neighbours-4 [pos relevant-positions]
+(defn- neighbours-4 [pos filled yet-to-visit]
+  "aux"
   (let [[x y] pos
-        potentials set([[(dec x) y]
-                        [(inc x) y]
-                        [x (dec y)]
-                        [x (inc y)]])]
-    (intersection potentials relevant-positions)))
+        neig (conj (filter
+                      (partial contains? filled)
+                      [[(dec x) y]
+                       [(inc x) y]
+                       [x (dec y)]
+                       [x (inc y)]]) pos)]
+    (loop [changed false
+           neig neig
+           yet-to-visit yet-to-visit]
+      (if (empty? neig)
+        {:changed changed :yet-to-visit yet-to-visit}
+        (let [f (first neig)
+              n (next neig)]
+          (if (contains? yet-to-visit f)
+            (recur true    n (disj yet-to-visit f))
+            (recur changed n       yet-to-visit)))))))
 
 
 
-;; (defn number-of-islands [board]
+
+(defn number-of-islands [board]
 ;;   "TODO http://prismoskills.appspot.com/lessons/Arrays/Count_blobs_in_matrix.jsp"
-;;   (loop [left-to-visit (set (m/filled-positions board))
-;;          result 0]
+   (let [filled (set (m/filled-positions board))]
+     (loop [yet-to-visit filled
+            result 0]
+       (if (empty? yet-to-visit)
+         result
+         (let [r (neighbours-4 (first yet-to-visit) filled yet-to-visit)]
+           (recur (:yet-to-visit r) (if (:changed r) (inc result) result)))))))
+
+
+(number-of-islands (m/from-string "##.#
+##..
+..##"))
 
 
 
